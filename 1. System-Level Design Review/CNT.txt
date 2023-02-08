@@ -1,0 +1,14 @@
+module CNT (input [3:0] D,
+	    input load_cnt, en,clk
+	     output reg [31:0] Q);
+always@ (posedge clk) 
+begin
+if (en) begin
+	if (load_cnt)
+	Q<=D;
+	else
+	Q<=Q-1
+	end else
+	Q<=Q
+end 
+endmodule
