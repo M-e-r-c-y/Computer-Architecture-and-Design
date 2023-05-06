@@ -25,6 +25,7 @@ module mips (
     wire       shift;
     wire  	   jal;
     wire       enable;
+    wire [31:0] instr_to_cu;
 
     datapath dp (
             .clk            (clk),
@@ -49,13 +50,16 @@ module mips (
 	   	    .wb_cntrl       (wb_cntrl),
 	   	    .shift          (shift),
 		    .jal 		    (jal),
-            .enable           (enable)
-	      
+            .enable         (enable),
+	        // -- Lab 8 Changes -- //
+	        .instr_to_cu  (instr_to_cu)
         );
 
     controlunit cu (
-            .opcode         (instr[31:26]),
-            .funct          (instr[5:0]),
+            .opcode         (instr_to_cu[31:26]),
+            .funct          (instr_to_cu[5:0]),
+            //.opcode         (instr[31:26]),
+            //.funct          (instr[5:0]),
             .branch         (branch),
             .jump           (jump),
             .reg_dst        (reg_dst),
