@@ -1,0 +1,7 @@
+Purpose
+Convert the fifteen-instruction 32-bit single-cycle MIPS processor into a five-stage, pipelined design.
+Description
+In this assignment, you are required to complete the design, functional verification, and FPGA implementation of a pipelined MIPS processor. You are further required to complete the design, functional verification, and FPGA implementation of a small system-on-chip (SoC) system which includes the pipelined MIPS processor.
+Based on the enhanced single-cycle MIPS processor (which supports the additional instructions multu, mfhi, mflo, jr, jal, sll, slr) you accomplished in lab 7, use the test program (factorial calculation via nested procedure calls) included in the assignment to test the pipelined MIPS processor.
+Extra credit (5 points) will be given if your design is enhanced to have control and data hazard handling capabilities.
+For this assignment, you are also expected to predict the expected performance of factorial computations between the single-cycle MIPS and pipelined MIPS. Analysis of each design should be graphed, showing the relationship between runtime (e.g., in SoC cycles) and the factorial input parameter.
