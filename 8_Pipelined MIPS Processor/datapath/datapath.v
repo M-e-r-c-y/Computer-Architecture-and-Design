@@ -72,6 +72,9 @@ module datapath (
     wire shift1;
     wire branch1;
     
+    //Lab 8 changes
+    wire rd2_out;
+    
     // EM/MEM Signal Wires //
     wire wb_cntrl2;
     wire jal2;
@@ -127,7 +130,7 @@ module datapath (
         .q (welo1) 
     );
     
-    mainreg #(1) idex_alu_ctrl(
+    mainreg #(4) idex_alu_ctrl(
         .clk (clk),
         .d (alu_ctrl),
         .q (alu_ctrl1) 
@@ -259,13 +262,13 @@ module datapath (
             .y              (wa_rf)
         );
         
-    mainreg #(32) wa1_reg(
+    mainreg #(5) wa1_reg(
         .clk (clk),
         .d (wa_rf),
         .q(wa) 
     );
     
-    mainreg #(32) wa2_reg(
+    mainreg #(5) wa2_reg(
         .clk (clk),
         .d (wa),
         .q(wa_r) 
@@ -280,7 +283,7 @@ module datapath (
             .wa             (rf_wa),
             .wd             (wd_rf),
             .rd1            (alu_p),
-            .rd2            (wd_dm),
+            .rd2            (rd2_out),
             .rd3            (rd3)
         );
 
@@ -311,8 +314,13 @@ module datapath (
     );
     mainreg #(32) alub_reg(
         .clk (clk),
-        .d (wd_dm),
+        .d (rd2_out),
         .q(wd_d) 
+    );
+    mainreg #(32) alub_reg_out(
+        .clk (clk),
+        .d (wd_d),
+        .q(wd_dm) 
     );
     mux2 #(32) alu_pb_mux (
             .sel            (alu_src1),
@@ -329,7 +337,7 @@ module datapath (
         
     alu alu (
             .op             (alu_ctrl1),
-            .a              (alu_pa),
+            .a              (alu_pp),
             .b              (alu_pb),
             .zero           (zero),
             .y              (alu_to_exmem_reg)
