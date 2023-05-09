@@ -55,10 +55,10 @@ module datapath (
     wire [31:0] lo_out;
     wire [31:0] wd_d;
     wire [31:0] rd;
-    wire [31:0] alu_mul_out;
     wire [4:0] wa_rf;
     wire [4:0] wa;
     wire [4:0] wa_r;
+    wire [31:0] alu_inter;
     
     // ID/EX Signal Wires //
     wire wb_cntrl1;
@@ -346,13 +346,13 @@ module datapath (
      mainreg #(32) alu_reg(
         .clk (clk),
         .d (alu_to_exmem_reg),
-        .q (alu_out) 
+        .q (alu_inter) 
     );
 
     // --- MEM Logic --- //
     mux2 #(32) rf_wd_mux (
             .sel            (dm2reg3),
-            .a              (alu_mul_out),
+            .a              (alu_out),
             .b              (rd_dm),
             .y              (rf_wd)
         );
@@ -402,9 +402,9 @@ mainreg #(32) mul_out_reg(
     
 mux2 #(32) alu_mul_mux (
             .sel            (wb_cntrl3),
-            .a              (alu_out),
+            .a              (alu_inter),
             .b              (hilo_reg_out),
-            .y              (alu_mul_out)
+            .y              (alu_out)
         );
         
 // --- JAL Logic ---//
